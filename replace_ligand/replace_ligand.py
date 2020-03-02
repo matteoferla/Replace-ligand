@@ -151,8 +151,6 @@ class LigandReplacer:
                                          numConfs=100,
                                          forceTol=0.2,
                                          pruneRmsThresh=0.1)
-        #         for i in idx:
-        #             AllChem.UFFOptimizeMolecule(probe, maxIters=2000, confId=i)
         AllChem.UFFOptimizeMoleculeConfs(probe)
         rdMolAlign.AlignMolConformers(probe)
         assert len(idx) > 0, 'No conformers generated!'

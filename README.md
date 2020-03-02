@@ -19,8 +19,6 @@ a reference smiles (to correct the bond order) of the ligand in the template com
 and the 3 letter name of the ligand, returns an object where the method fix, give a probe name (for files),
 an untaken 3 letter name and the smiles of the ligand will replace it to the other by generating and 
 choosing the best conformer (which is saved as first conformer in the SDF also).
-An improvement could be adding in the saving of the multiconformer SDF a step to save only conformers with an 
-RMSD from previously saved ones greater than 0.1.
 
     lr = LigandReplacer(code='template.pdb', ref_smiles='O=c1ccc2ccccc2[nH]1', ref_resn='OCH')
     dihydroxycoumarine = lr.replace(probe_name='dihydroxycoumarine',
@@ -31,7 +29,18 @@ RMSD from previously saved ones greater than 0.1.
 The 3 letter code is a bit of a pain.
 It has to be untaken if PDB components are loaded (needed for ions, ATP etc.).
 Try 3 random letters: https://www.rcsb.org/ligand/WQU.
+An improvement could be adding in the saving of the multiconformer SDF a step to save only conformers with an 
+RMSD from previously saved ones greater than 0.1. Also the conformer generation is slightly odd,
+namely using:
 
+    AllChem.EmbedMultipleConfs(probe,
+                               numConfs=100,
+                               forceTol=0.2,
+                               pruneRmsThresh=0.1)
+    AllChem.UFFOptimizeMoleculeConfs(probe)
+
+As opposed to using `params=AllChem.ETKDG()`.
+The reason for this is that I wanted to add some torsion in the ligand, even if it makes it unhappy.
 
 The second class, `LigandPoseReplacer`, inherits `LigandReplacer` and adds a few extra.
 Instead of `.replace(..)`, calling `.replace_to_pose(probe_name, probe_smiles, probe_resn)`
