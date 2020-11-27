@@ -1,6 +1,8 @@
 # Replace-ligand
 Example of how to replace a ligand with a similar in Rdkit and Pyrosetta.
 
+> DEPRACATION WARNING. This is a very simple older script. The tool [Fragmenstein](https://github.com/matteoferla/Fragmenstein) is a lot more powerful and can achieve the same thing as described in [this blog post](https://blog.matteoferla.com/2020/07/switching-ligand-in-pdb-with.html).
+
 ## Atomic name replacer
 In a seperate repo, [github.com/matteoferla/AtomicRenamer](https://github.com/matteoferla/AtomicRenamer),
 I have put a script that given a SMILES string, creates a mol2 file,
